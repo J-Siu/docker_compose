@@ -6,7 +6,7 @@ LABEL name="hostapd"
 LABEL usage="https://github.com/J-Siu/docker_compose/blob/master/docker/hostapd/README.md"
 
 RUN apk update \
-	&& apk --no-cache add hostapd@2.9-r1
+	&& apk --no-cache add hostapd=2.9-r1
 
 COPY docker-compose.yml env /
 

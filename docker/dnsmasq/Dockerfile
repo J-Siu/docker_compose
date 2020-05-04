@@ -6,7 +6,7 @@ LABEL name="dnsmasq"
 LABEL usage="https://github.com/J-Siu/docker_compose/blob/master/docker/dnsmasq/README.md"
 
 RUN apk update \
-	&& apk --no-cache add dnsmasq@2.81-r0
+	&& apk --no-cache add dnsmasq=2.81-r0
 
 COPY docker-compose.yml env /
 
