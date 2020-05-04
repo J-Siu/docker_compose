@@ -1,11 +1,11 @@
-Docker - dnsmasq
+Docker - amule
 
 ### Build
 
 ```sh
 git clone https://github.com/J-Siu/docker_compose.git
-cd docker/dnsmasq
-docker build -t jsiu/dnsmasq
+cd docker/amule
+docker build -t jsiu/amule
 ```
 
 ### Usage
@@ -15,15 +15,20 @@ docker build -t jsiu/dnsmasq
 Host|Inside Container|Mapping Required|Usage
 ---|---|---|---
 ${DM_CNF}||Yes|dnsmasq config directory
+${AMULE_DIR}|/amule/.amule/|yes|amule directory
+${AMULE_UID}|PUID|yes|amule uid
+${AMULE_GID}|PGID|yes|amule gid
 
 #### Run
 
 ```docker
 docker run \
 -d \
--v ${DM_CNF}:/etc/dnsmasq.d \
+-e PUID=1001 \
+-e PGID=1002 \
+-v /home/jsiu/.amule:/amule/.amule \
 --network=host \
-jsiu/dnsmasq
+jsiu/amule
 ```
 
 #### Compose
@@ -31,8 +36,8 @@ jsiu/dnsmasq
 Get docker-compose template from image:
 
 ```docker
-docker run --rm jsiu/dnsmasq cat /docker-compose.yml > docker-compose.yml
-docker run --rm jsiu/dnsmasq cat /env > .env
+docker run --rm jsiu/amule cat /docker-compose.yml > docker-compose.yml
+docker run --rm jsiu/amule cat /env > .env
 ```
 
 Fill in `.env` according to your environment.

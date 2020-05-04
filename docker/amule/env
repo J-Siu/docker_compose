@@ -1,1 +1,3 @@
-DM_CNF=./storage/dnsmasq.d
+AMULE_DIR=
+AMULE_UID=
+AMULE_GID=
