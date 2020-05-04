@@ -2,6 +2,40 @@ Docker MPD Lite with UID/GID handling.
 
 > MPD Lite is custome compile of MPD which trim down all functions except audio playing.
 
+### Minimal Compilation
+
+Only following MPD build options are enabled in Dockerfile:
+
+```sh
+-Dcue=true \
+-Ddatabase=true \
+-Depoll=true \
+-Deventfd=true \
+-Dfifo=true \
+-Dinotify=true \
+-Dpipe=true \
+-Dsignalfd=true \
+-Dtcp=true \
+-Dalsa=enabled \
+-Dffmpeg=enabled \
+-Dipv6=enabled \
+-Dsqlite=enabled
+```
+
+All other options are explicitly set to false or disabled.
+
+### Libraries
+
+Only use following libraries in container.
+
+Library|Usage
+---|---
+`alsa-lib`|Linux Alsa sound system. This is for sound output.
+`ffmpeg-libs`|This take care of 99% of audio file playback.
+`sqlite-libs`|For mpd song database.
+
+> ffmpeg-libs does pull in other decoders.
+
 ### Build
 
 ```sh
