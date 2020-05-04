@@ -6,7 +6,8 @@ LABEL maintainers="[John Sing Dao Siu](https://github.com/J-Siu)"
 LABEL name="mpd_lite"
 LABEL usage="https://github.com/J-Siu/docker_compose/blob/master/docker/mpd_lite/README.md"
 
-RUN wget http://www.musicpd.org/download/mpd/0.21/mpd-0.21.23.tar.xz / && tar xf mpd-0.21.23.tar.xz
+RUN wget http://www.musicpd.org/download/mpd/0.21/mpd-0.21.23.tar.xz \
+	&& tar xf mpd-0.21.23.tar.xz
 WORKDIR /mpd-0.21.23
 
 RUN apk --no-cache add build-base boost ninja boost-dev meson alsa-lib-dev sqlite-dev ffmpeg-dev \
