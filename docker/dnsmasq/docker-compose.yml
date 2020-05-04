@@ -1,0 +1,17 @@
+version: '3'
+services:
+  hostapd:
+    restart: unless-stopped
+    image: jsiu/dnsmasq
+    container_name: dnsmasq
+    network_mode: host
+    privileged: true
+    logging:
+      options:
+        tag: "{{.Name}}"
+    volumes:
+      - ${DM_CNF}:/etc/dnsmasq.d
+      - /run/systemd/resolve/resolv.conf:/etc/resolv.conf:ro
+    cap_add:
+      # Required (DHCP needs NET_ADMIN)
+      - NET_ADMIN

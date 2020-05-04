@@ -1,0 +1,13 @@
+MY_SSL=/data/docker/ssl
+
+MY_GOGS_TAG=latest
+MY_GOGS_DIR=/data/docker/gogs
+MY_GOGS_SSH_PORT=22222
+MY_GOGS_WEB_PORT=443
+
+# ElastiFlow
+EF_DIR=./storage/elastiflow_es
+EF_LS_CNF=./storage/elastiflow_es/logstash_conf
+EF_LS_HOS=./storage/elastiflow_es/hosts
+
+DM_CNF=./storage/dnsmasq.d

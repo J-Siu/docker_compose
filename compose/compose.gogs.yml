@@ -1,0 +1,15 @@
+version: '3'
+services:
+  gogs:
+    image: gogs/gogs:${MY_GOGS_TAG}
+    container_name: gogs
+    logging:
+      options:
+        tag: "{{.Name}}"
+    ports:
+      - "${MY_GOGS_SSH_PORT}:22"
+      - "${MY_GOGS_WEB_PORT}:3000"
+    volumes:
+      - ${MY_GOGS_DIR}:/data
+      - ${MY_SSL}:/data/ssl:ro
+    restart: always

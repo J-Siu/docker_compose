@@ -1,0 +1,15 @@
+version: '3'
+services:
+  amule:
+    restart: unless-stopped
+    image: jsiu/amule
+    container_name: amule
+    logging:
+      options:
+        tag: "{{.Name}}"
+    network_mode: host
+    volumes:
+      - ${AMULE_DIR}:/amule/.aMule:rw
+    environment:
+      - PUID=${AMULE_UID}
+      - PGID=${AMULE_GID}
