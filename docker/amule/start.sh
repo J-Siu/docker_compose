@@ -19,6 +19,9 @@ then
 	exit
 fi
 
+deluser ${PUSR}
+delgroup ${PUSR}
+
 addgroup -g ${PGID} ${PUSR}
 adduser -D -h ${PHOME} -G ${PUSR} -u ${PUID} ${PUSR}
 chown -R ${PUSR}:${PUSR} ${PHOME}
