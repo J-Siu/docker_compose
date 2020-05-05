@@ -18,3 +18,5 @@ services:
     environment:
       - PUID=${MPD_UID}
       - PGID=${MPD_GID}
+    cap_add:
+      - SYS_NICE

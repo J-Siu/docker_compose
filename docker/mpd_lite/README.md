@@ -80,6 +80,7 @@ docker run \
 -v ${MPD_PATH_MPD}:/mpd/.mpd \
 -v ${MPD_PATH_MUSIC}:/mpd/music \
 --device ${MPD_SND} \
+--cap-add sys_nice \
 jsiu/docker_mpd
 ```
 
@@ -96,6 +97,7 @@ docker run \
 -v /home/jsiu/MPD:/mpd/.mpd \
 -v /home/jsiu/Music:/mpd/music \
 --device /dev/snd \
+--cap-add sys_nice \
 jsiu/docker_mpd
 ```
 
