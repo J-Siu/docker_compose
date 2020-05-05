@@ -7,7 +7,7 @@ LABEL name="mpd"
 LABEL usage="https://github.com/J-Siu/docker_compose/blob/master/docker/mpd/README.md"
 
 RUN apk update \
-	&& apk --no-cache add mpd=0.21.22-r2
+	&& apk --no-cache add mpd=0.21.22-r2 alsa-lib sqlite-libs ffmpeg-libs
 
 COPY docker-compose.yml env start.sh mpd.conf /
 RUN chmod u+x /start.sh \
