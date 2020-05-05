@@ -25,6 +25,6 @@ delgroup ${PUSR}
 addgroup -g ${PGID} ${PUSR}
 adduser -D -h ${PHOME} -G ${PUSR} -u ${PUID} ${PUSR}
 adduser mpd audio
-chown -R ${PUSR}:${PUSR} ${PHOME}
+chown ${PUSR}:${PUSR} ${PHOME}
 
-su - ${PUSR} -c "${PROG} --stdout --no-daemon /mpd.conf"
+${PROG} --stdout --no-daemon /mpd.conf
