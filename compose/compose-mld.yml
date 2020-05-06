@@ -1,0 +1,33 @@
+version: '3'
+services:
+  mld:
+    restart: always
+    image: logicwar/mldonkey
+    container_name: mld
+    network_mode: host
+    #ports:
+    #  - 4000:4000
+    #  - 4001:4001
+    #  - 4080:4080
+    #  - 20562:20562
+    #  - 20566:20566/udp
+    #  - 16965:16965
+    #  - 16965:16965/udp
+    #
+    #  - 6209:6209
+    #  - 6209:6209/udp
+    #  - 6881:6881
+    #  - 6882:6882
+    #  - 3617:3617/udp
+    #  - 4444:4444
+    #  - 4444:4444/udp
+    volumes:
+      - ${MLD_CNF}:/var/lib/mldonkey:rw
+      - ${MLD_TMP}:/mnt/mldonkey_tmp:rw
+      - ${MLD_DL}:/mnt/mldonkey_completed:rw
+    environment:
+      - TZ=${MLD_TZ}
+      - PUID=${MLD_UID}
+      - PGID=${MLD_GID}
+
+# http://upd.emule-security.org/server.met

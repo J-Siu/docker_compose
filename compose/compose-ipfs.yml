@@ -1,0 +1,17 @@
+version: '3'
+services:
+  ipfs:
+    restart: always
+    image: ipfs/go-ipfs:latest
+    container_name: ipfs
+    network_mode: host
+    #ports:
+    #  - ${IPFS_PORT_SWARM}:54001
+    #  - ${IPFS_PORT_API}:55001
+    #  - ${IPFS_PORT_GW}:58080
+    volumes:
+      - ${IPFS_STAGE}:/export
+      - ${IPFS_DATA}:/data/ipfs
+    #environment:
+    # This is only for 1st run
+    #  - IPFS_PROFILE=server
