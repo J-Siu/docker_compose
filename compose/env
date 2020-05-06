@@ -11,3 +11,28 @@ EF_LS_CNF=./storage/elastiflow_es/logstash_conf
 EF_LS_HOS=./storage/elastiflow_es/hosts
 
 DM_CNF=./storage/dnsmasq.d
+
+# ElastiFlow
+EF_DIR=./storage/elastiflow_es
+
+# mldonkey
+MLD_CNF=./storage/mld/cnf
+MLD_TMP=./storage/mld/tmp
+MLD_DL=./storage/mld/dl
+MLD_TZ=America/New_York
+MLD_UID=1000
+MLD_GID=1000
+
+# ipfs
+IPFS_PORT_SWARM=54001
+IPFS_PORT_API=55001
+IPFS_PORT_GW=58080
+IPFS_STAGE=./storage/ipfs/stage
+IPFS_DATA=./storage/ipfs/data
+
+# Pi-Hole
+PH_ETC=./storage/pihole
+PH_DNS=./storage/dnsmasq.d
+PH_DNS1=1.1.1.1
+PH_DNS2=8.8.8.8
+PH_SIP=172.16.168.1
