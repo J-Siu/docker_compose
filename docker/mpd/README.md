@@ -123,13 +123,11 @@ docker-compose up
   - Base image: alpine:edge
   - mpd version: 0.21.14
 - 0.21.19
-  - Matching mpd version number
-  - Base image: alpine:edge
   - mpd version: 0.21.19
 - 0.21.22
-  - Matching mpd version number
-  - Base image: alpine:edge
   - mpd version: 0.21.22
+- 0.21.23
+  - mpd version: 0.21.23
 
 ### License
 
