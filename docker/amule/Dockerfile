@@ -8,7 +8,7 @@ LABEL usage="https://github.com/J-Siu/docker_compose/blob/master/docker/amule/RE
 
 RUN echo http://dl-cdn.alpinelinux.org/alpine/edge/testing >> /etc/apk/repositories \
 && apk update \
-&& apk --no-cache add amule=11025-r1 git \
+&& apk --no-cache add tzdata amule=11025-r1 git \
 && mkdir -p /amule
 
 # Include AmuleWebUI-Reloaded
@@ -17,7 +17,7 @@ RUN cd /usr/share/amule/webserver \
 && rm -rf AmuleWebUI-Reloaded/.git AmuleWebUI-Reloaded/doc-images \
 && apk del git
 
-COPY start.sh /
+COPY docker-compose.yml env start.sh /
 RUN chmod +x /start.sh
 
 ENTRYPOINT ["/start.sh"]

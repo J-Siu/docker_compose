@@ -18,6 +18,7 @@ ${DM_CNF}||Yes|dnsmasq config directory
 ${AMULE_DIR}|/amule/.amule/|yes|amule directory
 ${AMULE_UID}|PUID|yes|amule uid
 ${AMULE_GID}|PGID|yes|amule gid
+${TZ}|P_TZ|yes|time zone
 
 #### Run
 
@@ -26,6 +27,7 @@ docker run \
 -d \
 -e PUID=1001 \
 -e PGID=1002 \
+-e P_TZ=America/New_York \
 -v /home/jsiu/.amule:/amule/.amule \
 --network=host \
 jsiu/amule
