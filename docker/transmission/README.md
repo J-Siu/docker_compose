@@ -20,6 +20,10 @@ ${TRANSMISSION_UID}|PUID|yes|transmission uid
 ${TRANSMISSION_GID}|PGID|yes|transmission gid
 ${TZ}|P_TZ|no|time zone
 
+#### Download Directory
+
+As `${TRANSMISSION_DIR}` is acting as `transmission` home directory, you should create a `Downloads` directory inside it.
+
 #### Run
 
 ```docker

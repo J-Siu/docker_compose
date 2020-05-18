@@ -8,7 +8,7 @@ LABEL usage="https://github.com/J-Siu/docker_compose/blob/master/docker/transmis
 
 RUN apk update \
 && apk --no-cache add tzdata transmission-daemon=2.94-r4 \
-&& mkdir -p /transmission/Downloads
+&& mkdir -p /transmission
 
 COPY docker-compose.yml env start.sh /
 RUN chmod +x /start.sh
