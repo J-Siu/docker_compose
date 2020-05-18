@@ -1,0 +1,16 @@
+version: '3'
+services:
+  transmission:
+    restart: unless-stopped
+    image: jsiu/transmission
+    container_name: transmission
+    logging:
+      options:
+        tag: "{{.Name}}"
+    network_mode: host
+    volumes:
+      - ${TRANSMISSION_DIR}:/transmission:rw
+    environment:
+      - PUID=${TRANSMISSION_UID}
+      - PGID=${TRANSMISSION_GID}
+      - P_TZ=${TZ}
