@@ -22,7 +22,7 @@ echo P_TZ:${P_TZ}
 if [ "${#P_TZ}" -gt "0" ]
 then
 	TZ="/usr/share/zoneinfo/${P_TZ}"
-	if [ -f "${TZ}"]
+	if [ -f "${TZ}" ]
 	then
 		cp ${TZ} /etc/localtime
 		echo "${P_TZ}" > /etc/timezone
