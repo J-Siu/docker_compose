@@ -8,12 +8,7 @@ LABEL usage="https://github.com/J-Siu/docker_compose/blob/master/docker/mldonkey
 
 RUN apt update \
 && apt -y install tzdata mldonkey-server=3.1.6-1+b1 \
-&& mkdir -p \
-  /mld/.mldonkey \
-  /mld/incoming \
-  /mld/shared \
-  /mld/temp \
-  /mld/torrents
+&& mkdir /mld
 
 COPY docker-compose.yml env start.sh /
 RUN chmod +x /start.sh

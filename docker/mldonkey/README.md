@@ -14,7 +14,7 @@ docker build -t jsiu/mldonkey .
 
 Host|Inside Container|Mapping Required|Usage
 ---|---|---|---
-${MLD_DIR}|/mld/.mldonkey/|yes|mldonkey directory
+${MLD_CNF}|/mld/.mldonkey/|yes|mldonkey directory
 ${MLD_UID}|PUID|yes|amule uid
 ${MLD_GID}|PGID|yes|amule gid
 ${TZ}|P_TZ|yes|time zone
