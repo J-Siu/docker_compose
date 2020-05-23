@@ -32,6 +32,5 @@ fi
 # Debian style
 groupadd -g ${PGID} ${PUSR}
 useradd -M -d ${PHOME} -u ${PUID} -g ${PGID} ${PUSR}
-chown -R ${PUSR}:${PUSR} ${PHOME}
 
-su - ${PUSR} -c "${PROG} \"\""
+su - ${PUSR} -c ${PROG}
