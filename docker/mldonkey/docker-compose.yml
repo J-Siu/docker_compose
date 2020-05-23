@@ -13,7 +13,6 @@ services:
     #  - ${MLD_INC}:/mld/inc:rw
     #  - ${MLD_SHR}:/mld/shr:rw
     #  - ${MLD_TMP}:/mld/tmp:rw
-    #  - ${MLD_TOR}:/mld/tor:rw
     environment:
       - P_TZ=${TZ}
       - PUID=${MLD_UID}
