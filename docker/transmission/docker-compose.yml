@@ -9,8 +9,10 @@ services:
         tag: "{{.Name}}"
     network_mode: host
     volumes:
-      - ${TRANSMISSION_DIR}:/transmission:rw
+      - ${TRANSMISSION_CNF}:/transmission/.config/transmission-daemon:rw
     environment:
+      - P_TZ=${TZ}
       - PUID=${TRANSMISSION_UID}
       - PGID=${TRANSMISSION_GID}
-      - P_TZ=${TZ}
+      # Transmission Web Control (true/false)
+      - PTWC=${TRANSMISSION_TWC}

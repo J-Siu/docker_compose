@@ -1,4 +1,6 @@
 TZ=America/New_York
-TRANSMISSION_DIR=
 TRANSMISSION_UID=
 TRANSMISSION_GID=
+TRANSMISSION_CNF=
+# Transmission Web Control (true/false)
+TRANSMISSION_TWC=false

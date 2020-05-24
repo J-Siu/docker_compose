@@ -1,4 +1,4 @@
-Docker - transmission with UID/GID handling.
+Docker - transmission with UID/GID handling. Optional Transmission Web Control
 
 ### Build
 
@@ -14,15 +14,11 @@ docker build --network=host -t jsiu/transmission .
 
 Host|Inside Container|Mapping Required|Usage
 ---|---|---|---
-${DM_CNF}||Yes|dnsmasq config directory
-${TRANSMISSION_DIR}|/transmission/|yes|transmission home directory
+${TZ}|P_TZ|no|time zone
 ${TRANSMISSION_UID}|PUID|yes|transmission uid
 ${TRANSMISSION_GID}|PGID|yes|transmission gid
-${TZ}|P_TZ|no|time zone
-
-#### Download Directory
-
-As `${TRANSMISSION_DIR}` is acting as `transmission` home directory, you should create a `Downloads` directory inside it.
+${TRANSMISSION_CNF}|/transmission/.config/transmission-daemon|yes|transmission config directory
+${TRANSMISSION_TWC}|PTWC|no|Optional Transmission Web Control(true/false)
 
 #### Run
 
@@ -32,7 +28,21 @@ docker run \
 -e PUID=1001 \
 -e PGID=1002 \
 -e P_TZ=America/New_York \
--v /home/jsiu/transmission:/transmission \
+-v /home/jsiu/transmission:/transmission/.config/transmission-daemon \
+--network=host \
+jsiu/transmission
+```
+
+To use [Transmission Web Control](https://github.com/ronggang/transmission-web-control) as web gui:
+
+```docker
+docker run \
+-d \
+-e PUID=1001 \
+-e PGID=1002 \
+-e PTWC=true \
+-e P_TZ=America/New_York \
+-v /home/jsiu/transmission:/transmission/.config/transmission-daemon \
 --network=host \
 jsiu/transmission
 ```

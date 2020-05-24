@@ -29,6 +29,12 @@ then
 	fi
 fi
 
+if [ "${PTWC}" = "true" ]
+then
+	wget https://github.com/ronggang/transmission-web-control/raw/master/release/install-tr-control.sh
+	sh install-tr-control.sh auto
+fi
+
 deluser ${PUSR}
 delgroup ${PUSR}
 

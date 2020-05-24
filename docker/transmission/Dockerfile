@@ -5,6 +5,7 @@ LABEL version="2.94"
 LABEL maintainers="[John Sing Dao Siu](https://github.com/J-Siu)"
 LABEL name="transmission"
 LABEL usage="https://github.com/J-Siu/docker_compose/blob/master/docker/transmission/README.md"
+LABEL description="Docker - transmission with UID/GID handling, and optional Transmission Web Control"
 
 RUN apk update \
 && apk --no-cache add tzdata transmission-daemon=2.94-r4 \
