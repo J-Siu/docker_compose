@@ -74,6 +74,8 @@ docker-compose up
 
 - 2.94
   - transmission version 2.94
+- 3.00-r0
+  - transmission version 3.00-r0
 
 ### License
 
