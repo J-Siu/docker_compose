@@ -36,4 +36,4 @@ addgroup -g ${PGID} ${PUSR}
 adduser -D -h ${PHOME} -G ${PUSR} -u ${PUID} ${PUSR}
 chown -R ${PUSR}:${PUSR} ${PHOME}
 
-su - ${PUSR} -c "${PROG} \"-o\""
+su ${PUSR} -c "${PROG} \"-o\""
