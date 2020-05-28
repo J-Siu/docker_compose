@@ -1,0 +1,17 @@
+version: '3'
+services:
+  tor:
+    restart: unless-stopped
+    image: jsiu/tor
+    container_name: tor
+    logging:
+      options:
+        tag: "{{.Name}}"
+    network_mode: host
+    volumes:
+      - ${TOR_CNF}:/torrc:ro
+      - ${TOR_DAT}:/tor/.tor:rw
+    environment:
+      - P_TZ=${TZ}
+      - PUID=${TOR_UID}
+      - PGID=${TOR_GID}
