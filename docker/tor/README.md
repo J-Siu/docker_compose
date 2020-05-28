@@ -59,10 +59,8 @@ docker-compose up
 
 ### Change Log
 
-- 2.94
-  - tor version 2.94
-- 3.00-r0
-  - tor version 3.00-r0
+- 0.4.3.5-r0
+  - tor version 0.4.3.5-r0
 
 ### License
 
