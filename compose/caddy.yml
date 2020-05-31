@@ -1,0 +1,15 @@
+version: 3
+service:
+  caddy:
+    restart: unless-stopped
+    logging:
+      options:
+        tag: "{{.Name}}"
+    image: caddy
+    container_name: caddy
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ${CADDY_CNF}:/etc/caddy/Caddyfile
+      - ${CADDY_DAT}:/data
