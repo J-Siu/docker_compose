@@ -10,11 +10,6 @@ EF_DIR=./storage/elastiflow_es
 EF_LS_CNF=./storage/elastiflow_es/logstash_conf
 EF_LS_HOS=./storage/elastiflow_es/hosts
 
-DM_CNF=./storage/dnsmasq.d
-
-# ElastiFlow
-EF_DIR=./storage/elastiflow_es
-
 # mldonkey
 MLD_CNF=./storage/mld/cnf
 MLD_TMP=./storage/mld/tmp
@@ -36,3 +31,7 @@ PH_DNS=./storage/dnsmasq.d
 PH_DNS1=1.1.1.1
 PH_DNS2=8.8.8.8
 PH_SIP=172.16.168.1
+
+# Caddy
+CADDY_CNF=./storage/caddy/caddyfile
+CADDY_DAT=./storage/caddy/data
