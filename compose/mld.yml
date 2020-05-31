@@ -1,7 +1,10 @@
 version: '3'
 services:
   mld:
-    restart: always
+    restart: unless-stopped
+    logging:
+      options:
+        tag: "{{.Name}}"
     image: logicwar/mldonkey
     container_name: mld
     network_mode: host
