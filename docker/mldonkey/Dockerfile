@@ -13,4 +13,4 @@ RUN apt update \
 COPY docker-compose.yml env start.sh /
 RUN chmod +x /start.sh
 
-ENTRYPOINT ["/start.sh"]
+CMD ["/start.sh"]

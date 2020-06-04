@@ -10,4 +10,4 @@ RUN apk update \
 
 COPY docker-compose.yml env /
 
-ENTRYPOINT ["dnsmasq","--no-daemon"]
+CMD ["dnsmasq","--no-daemon"]
