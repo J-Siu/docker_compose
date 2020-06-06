@@ -1,4 +1,3 @@
-# docker_mpd
 FROM alpine:edge
 
 LABEL version="1.0"
