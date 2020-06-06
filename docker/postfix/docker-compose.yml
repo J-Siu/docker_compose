@@ -1,6 +1,6 @@
 version: "3"
 services:
-  pfx:
+  postfix:
     restart: unless-stopped
     image: jsiu/postfix
     container_name: postfix

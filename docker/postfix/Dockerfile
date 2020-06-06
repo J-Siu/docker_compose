@@ -3,7 +3,7 @@ FROM alpine:edge
 
 LABEL version="1.0"
 LABEL maintainers="[John Sing Dao Siu](https://github.com/J-Siu)"
-LABEL name="pfx"
+LABEL name="postfix"
 LABEL usage="https://github.com/J-Siu/docker_compose/blob/master/docker/postfix/README.md"
 
 RUN apk update && \
