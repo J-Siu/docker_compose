@@ -67,7 +67,7 @@ Mount host `/dev/log` to container `/dev/log` to enable postfix logs to host log
 docker run \
 -d \
 -e P_TZ=America/New_York \
--v /home/jsiu/postfix:/etc/postfix \
+-v /home/jsiu/postfix:/postfix \
 -v /dev/log:/dev/log
 -p 25 \
 -p 587 \
