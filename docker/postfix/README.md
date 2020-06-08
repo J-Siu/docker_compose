@@ -5,7 +5,7 @@ Docker - postfix with sasldb2 support
 ```sh
 git clone https://github.com/J-Siu/docker_compose.git
 cd docker/postfix
-docker build -t jsiu/postfix
+docker build -t jsiu/postfix .
 ```
 
 ### Usage
@@ -79,7 +79,7 @@ jsiu/postfix
 Get docker-compose template from image:
 
 ```docker
-docker run --rm jsiu/postifx cat /docker-compose.yml > docker-compose.yml
+docker run --rm jsiu/postfix cat /docker-compose.yml > docker-compose.yml
 docker run --rm jsiu/postfix cat /env > env
 ```
 
