@@ -10,22 +10,60 @@ docker build -t jsiu/hugo .
 
 ### Usage
 
-#### Host Directories and Volume Mapping
+#### Environment Variable and Volume Mapping
 
-Host|Inside Container|Mapping Required|Usage
----|---|---|---
-${PUB_DIR}|/public|yes|Hugo public will be copied here
-${GIT_URL}|${GIT_URL}|yes|Hugo will work inside this dir
-${GIT_SUB}|${GIT_SUB}|no|Define this if sub-module need to be pulled
-${TZ}|${P_TZ}|no|time zone
+Host|Inside Container|Mapping Required|Default|Usage
+---|---|---|---|---
+${TZ}|${MY_TZ}|no|n/a|time zone
+${WWW_VOL}|/www|yes|n/a|Base dir/volume Hugo publish to
+${MY_GIT_DIR}|${MY_GIT_DIR}|no|/hugo|Git pull location
+${MY_GIT_URL}|${MY_GIT_URL}|yes|n/a|Hugo will work inside this dir
+${MY_GIT_SUB}|${MY_GIT_SUB}|no|n/a|If defined(not empty), pull git sub-module
+${MY_PUB_DIR}|${MY_PUB_DIR}|no|n/a|If defined(not empty), public will be copied here.
+
+If `${MY_GIT_DIR}` is definded:
+
+- If `${MY_GIT_DIR}/.git` exist, do git pull, exist if failed.
+- If `${MY_GIT_DIR}` exist
+	- If empty, do git clone. exit if failed.
+	- If not empty, if git remote match, do git pull, exit if failed.
+  - If not emoty, not a repo, exit.
+- If `${MY_GIT_DIR}` does not exist, do git clone, exist if failed.
 
 #### Run
 
+PS: All arguments will past to `hugo` in `start.sh`.
+
 ```docker
-docker run \
+docker run --rm \
+-v ${WWW_VOL}:/www \
 -e P_TZ=America/New_York \
--e GIT_URL=${GIT_URL} \
--v ${PUB_DIR}:/public \
+-e MY_GIT_URL=${MY_GIT_URL} \
+-e MY_GIT_SUB=true \
+jsiu/hugo
+```
+
+In following example fresh git clone each run, and copy `public` into `/www/johnsiu.com` at the end.
+
+```sh
+docker run --rm \
+-v CADDY_WWW:/www \
+-e P_TZ=America/New_York \
+-e MY_GIT_URL=https://github.com/J-Siu/johnsiu.com.git \
+-e MY_GIT_SUB=true \
+-e MY_PUB_DIR=/www/johnsiu.com \
+jsiu/hugo
+```
+
+In following example will clone only if needed, else pull, no `public` copy at the end.
+
+```sh
+docker run --rm \
+-v CADDY_WWW:/www \
+-e P_TZ=America/New_York \
+-e MY_GIT_URL=https://github.com/J-Siu/johnsiu.com.git \
+-e MY_GIT_SUB=true \
+-e MY_GIT_DIR=/www/johnsiu.com \
 jsiu/hugo
 ```
 
@@ -48,7 +86,7 @@ docker run --rm jsiu/hugo cat /README.md > README.md
 ### Change Log
 
 - 1.0
-  - Initial commit.
+	- Initial commit.
 
 ### License
 

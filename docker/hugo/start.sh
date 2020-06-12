@@ -1,54 +1,86 @@
 #!/bin/sh
 
-GIT_DIR=/hugo
-PUB_DIR=/public
+[ -z ${MY_GIT_DIR} ] && MY_GIT_DIR=/hugo
 
-echo GIT_URL:${GIT_URL}
-echo GIT_DIR:${GIT_DIR}
-echo GIT_SUB:${GIT_SUB}
-echo PUB_DIR:${PUB_DIR}
+echo MY_TZ:${MY_TZ}
+echo MY_GIT_DIR:${MY_GIT_DIR}
+echo MY_GIT_URL:${MY_GIT_URL}
+echo MY_GIT_SUB:${MY_GIT_SUB}
+echo MY_PUB_DIR:${MY_PUB_DIR}
+echo GIT_SSL_NO_VERIFY:${GIT_SSL_NO_VERIFY}
 
-ERR_CHK() {
+# Run cmd with error check
+RUN_CMD() {
 	CMD=$1
-	RTN=$2
+	$CMD
+	RTN=$?
 	if [ ${RTN} -ne 0 ]; then
 		echo \"$CMD\" error:${RTN}
 		exit ${RTN}
 	fi
+	return ${RTN}
 }
 
-echo P_TZ:${P_TZ}
-if [ "${#P_TZ}" -gt "0" ]; then
-	TZ="/usr/share/zoneinfo/${P_TZ}"
+# --- TZ
+if [ "${#MY_TZ}" -gt "0" ]; then
+	TZ="/usr/share/zoneinfo/${MY_TZ}"
 	if [ -f "${TZ}" ]; then
 		cp ${TZ} /etc/localtime
-		echo "${P_TZ}" >/etc/timezone
+		echo "${MY_TZ}" >/etc/timezone
 	fi
 fi
 
-# check PUB_DIR
-if [ ! -d ${PUB_DIR} ]; then
-	echo ${PUB_DIR} not available
-	exit 1
+# --- MY_PUB_DIR check
+[ ! -z ${MY_PUB_DIR} ] && [ ! -d ${MY_PUB_DIR} ] && RUN_CMD "mkdir -p ${MY_PUB_DIR}"
+
+# --- GIT Clone/Pull
+if [ ! -d ${MY_GIT_DIR} ]; then
+	# MY_GIT_DIR does not exist, do git clone
+	RUN_CMD "git clone ${MY_GIT_URL} ${MY_GIT_DIR}"
+else
+	# MY_GIT_DIR exist ...
+	echo ${MY_GIT_DIR} exist ...
+	if [ "$(ls -A ${MY_GIT_DIR})" ]; then
+		{
+			echo ... not empty
+			if [ -d ${MY_GIT_DIR}/.git ]; then
+				echo ... is repo
+				RUN_CMD "cd ${MY_GIT_DIR}"
+				# Check if remote same as MY_GIT_URL
+				REMOTE=$(git remote -v | grep \(fetch\))
+				case "${REMOTE}" in
+				*"${MY_GIT_URL}"*)
+					echo ... pull
+					RUN_CMD "git pull"
+					;;
+				*)
+					echo MY_GIT_URL:${MY_GIT_URL} not same as repo remote: ${REMOTE}
+					exit 1
+					;;
+				esac
+			else
+				echo ... not repo, don\'t touch, exit
+				echo ${MY_GIT_DIR} exist but not empty and not a git repo.
+				exit 1
+			fi
+		}
+	else
+		{
+			# MY_GIT_DIR exist but empty
+			echo ... empty
+			RUN_CMD "git clone ${MY_GIT_URL} ${MY_GIT_DIR}"
+		}
+	fi
 fi
 
-CMD="git clone ${GIT_URL} ${GIT_DIR}"
-$CMD
-ERR_CHK "${CMD}" $?
-
-cd ${GIT_DIR}
-
-# Pull sub-module
-if [ "${#GIT_SUB}" -gt "0" ]; then
-	CMD="git submodule update --init --recursive"
-	echo $CMD
-	$CMD
-	ERR_CHK "${CMD}" $?
+# --- GIT Sub-module
+if [ ! -z ${MY_GIT_SUB} ]; then
+	RUN_CMD "cd ${MY_GIT_DIR}"
+	RUN_CMD "git submodule update --init --recursive"
 fi
 
-CMD="hugo $@"
-$CMD
-ERR_CHK "${CMD}" $?
+# --- Hugo
+RUN_CMD "hugo $@"
 
-# Export to /public
-cp -r public/* ${PUB_DIR}/
+# --- Copy
+[ ! -z ${MY_PUB_DIR} ] && RUN_CMD "cp -r public/* ${MY_PUB_DIR}/"
