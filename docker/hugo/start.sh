@@ -84,3 +84,5 @@ RUN_CMD "hugo $@"
 
 # --- Copy
 [ ! -z ${MY_PUB_DIR} ] && RUN_CMD "cp -r public/* ${MY_PUB_DIR}/"
+
+exit 0
