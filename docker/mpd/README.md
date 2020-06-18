@@ -5,7 +5,7 @@ Docker MPD with UID/GID handling.
 ```sh
 git clone https://github.com/J-Siu/docker_compose.git
 cd docker/mpd
-docker build -t jsiu/mpd
+docker build -t jsiu/mpd .
 ```
 
 ### Usage

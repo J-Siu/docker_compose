@@ -5,7 +5,7 @@ Docker - amule
 ```sh
 git clone https://github.com/J-Siu/docker_compose.git
 cd docker/amule
-docker build -t jsiu/amule
+docker build -t jsiu/amule .
 ```
 
 ### Usage

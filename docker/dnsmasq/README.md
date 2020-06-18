@@ -5,7 +5,7 @@ Docker - dnsmasq
 ```sh
 git clone https://github.com/J-Siu/docker_compose.git
 cd docker/dnsmasq
-docker build -t jsiu/dnsmasq
+docker build -t jsiu/dnsmasq .
 ```
 
 ### Usage

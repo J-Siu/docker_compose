@@ -5,7 +5,7 @@ Docker - hostapd
 ```sh
 git clone https://github.com/J-Siu/docker_compose.git
 cd docker/hostapd
-docker build -t jsiu/hostapd
+docker build -t jsiu/hostapd .
 ```
 
 ### Usage
