@@ -30,7 +30,7 @@ Only use following libraries in container.
 
 Library|Usage
 ---|---
-`alsa-lib`|Linux Alsa sound system. This is for sound output.
+`alsa-lib`|Linux ALSA sound system. This is for sound output.
 `ffmpeg-libs`|This take care of 99% of audio file playback.
 `sqlite-libs`|For mpd song database.
 
@@ -71,7 +71,7 @@ MPD_GID|GID of ${MPD_PATH_MPD},${MPD_PATH_MUSIC} owner
 
 #### Run
 
-```docker
+```sh
 docker run \
 -d \
 -e PUID=${MPD_UID} \
@@ -88,7 +88,7 @@ Example:
 
 If ${MPD_PATH_MPD} and ${MPD_PATH_MUSIC} owner's UID=1001 and GID=1002:
 
-```docker
+```sh
 docker run \
 -d \
 -e PUID=1001 \
@@ -101,11 +101,27 @@ docker run \
 jsiu/docker_mpd
 ```
 
+If using `/etc/asound.conf`:
+
+```sh
+docker run \
+-d \
+-e PUID=1001 \
+-e PGID=1002 \
+-p 6600:6600/tcp \
+-v /home/jsiu/MPD:/mpd/.mpd \
+-v /home/jsiu/Music:/mpd/music \
+-v /etc/asound.conf:/etc/asound.conf \
+--device /dev/snd \
+--cap-add sys_nice \
+jsiu/docker_mpd
+```
+
 #### Debug / Custom Config
 
 Get config from image:
 
-```docker
+```sh
 docker run --rm jsiu/docker_mpd cat /mpd.conf > mpd.conf
 ```
 
@@ -117,7 +133,7 @@ log_level  "verbose"
 
 Run with mpd.conf mapping:
 
-```docker
+```sh
 docker run \
 -e PUID=1001 \
 -e PGID=1002 \
@@ -133,7 +149,7 @@ jsiu/docker_mpd
 
 Get docker-compose template from image:
 
-```docker
+```sh
 docker run --rm jsiu/mpd cat /docker-compose.yml > docker-compose.yml
 docker run --rm jsiu/mpd cat /env > .env
 ```
@@ -164,6 +180,12 @@ docker-compose up
   - mpd version: 0.21.19
 - 0.21.23
   - mpd version: 0.21.23
+- 0.21.24
+  - mpd version: 0.21.24
+  - Fix base image: alpine:edge
+  - start.sh
+    - Add exit code 1
+    - Remove delgroup ${PUSR}
 
 ### License
 
