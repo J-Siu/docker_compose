@@ -1,4 +1,4 @@
-Docker MPD with UID/GID handling.
+Docker MPD Lite with UID/GID + audio GID handling.
 
 ### Build
 
@@ -128,6 +128,12 @@ docker-compose up
   - mpd version: 0.21.22
 - 0.21.23
   - mpd version: 0.21.23
+- 0.21.24
+  - mpd version: 0.21.24
+  - start.sh
+    - Use exec so start.sh can exit
+    - Add exit code 1
+    - Remove delgroup/deluser ${PUSR}
 
 ### License
 
