@@ -82,7 +82,7 @@ docker-compose up
   - Dockerfile remove apk update
   - start.sh
     - Use exec so start.sh can exit
-    - Remove delgroup/deluser ${PUSR}
+    - Remove delgroup ${PUSR}
 
 ### License
 
