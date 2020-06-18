@@ -73,11 +73,16 @@ else
 	fi
 fi
 
+# --- CD into repo
+RUN_CMD "cd ${MY_GIT_DIR}"
+
 # --- GIT Sub-module
 if [ ! -z ${MY_GIT_SUB} ]; then
-	RUN_CMD "cd ${MY_GIT_DIR}"
 	RUN_CMD "git submodule update --init --recursive"
 fi
+
+# --- clear public
+rm -rf public
 
 # --- Hugo
 RUN_CMD "hugo $@"
