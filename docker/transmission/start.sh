@@ -35,11 +35,8 @@ then
 	sh install-tr-control.sh auto
 fi
 
-deluser ${PUSR}
-delgroup ${PUSR}
-
 addgroup -g ${PGID} ${PUSR}
 adduser -D -h ${PHOME} -G ${PUSR} -u ${PUID} ${PUSR}
 chown -R ${PUSR}:${PUSR} ${PHOME}
 
-su ${PUSR} -c "${PROG} \"-f\""
+exec su ${PUSR} -c "${PROG} \"-f\""

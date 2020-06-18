@@ -76,6 +76,13 @@ docker-compose up
   - transmission version 2.94
 - 3.00-r0
   - transmission version 3.00-r0
+- 3.00-r0-p1
+  - transmission version 3.00-r0
+  - Add postfix `-p1` to indicate container update
+  - Dockerfile remove apk update
+  - start.sh
+    - Use exec so start.sh can exit
+    - Remove delgroup/deluser ${PUSR}
 
 ### License
 
