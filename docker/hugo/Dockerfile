@@ -1,6 +1,6 @@
 FROM alpine:edge
 
-LABEL version="1.0"
+LABEL version="1.1"
 LABEL maintainers="[John Sing Dao Siu](https://github.com/J-Siu)"
 LABEL name="hugo"
 LABEL usage="https://github.com/J-Siu/docker_compose/blob/master/docker/hugo/README.md"

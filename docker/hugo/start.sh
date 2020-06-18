@@ -1,11 +1,14 @@
 #!/bin/sh
 
 [ -z ${MY_GIT_DIR} ] && MY_GIT_DIR=/hugo
+[ -z ${MY_HUG_PUB} ] && MY_HUG_PUB=public
 
 echo MY_TZ:${MY_TZ}
 echo MY_GIT_DIR:${MY_GIT_DIR}
 echo MY_GIT_URL:${MY_GIT_URL}
 echo MY_GIT_SUB:${MY_GIT_SUB}
+echo MY_HUG_DIR:${MY_HUG_DIR}
+echo MY_HUG_PUB:${MY_HUG_PUB}
 echo MY_PUB_DIR:${MY_PUB_DIR}
 echo GIT_SSL_NO_VERIFY:${GIT_SSL_NO_VERIFY}
 
@@ -81,13 +84,13 @@ if [ ! -z ${MY_GIT_SUB} ]; then
 	RUN_CMD "git submodule update --init --recursive"
 fi
 
-# --- clear public
-rm -rf public
+# --- CD into Hugo dir
+RUN_CMD "cd ${MY_GIT_DIR}/${MY_HUG_DIR}"
 
 # --- Hugo
 RUN_CMD "hugo $@"
 
 # --- Copy
-[ ! -z ${MY_PUB_DIR} ] && RUN_CMD "cp -r public/* ${MY_PUB_DIR}/"
+[ ! -z ${MY_PUB_DIR} ] && RUN_CMD "cp -r ${MY_HUG_PUB}/* ${MY_PUB_DIR}/"
 
 exit 0
