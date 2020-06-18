@@ -19,8 +19,6 @@ then
 	exit 1
 fi
 
-deluser ${PUSR}
-
 # detect and use host audio GID from /dev/snd/timer
 AGID=$(stat -c %g /dev/snd/timer)
 delgroup audio
@@ -31,6 +29,6 @@ adduser -D -h ${PHOME} -G ${PUSR} -u ${PUID} ${PUSR}
 adduser ${PUSR} audio
 chown ${PUSR}:${PUSR} ${PHOME}
 
-su - mpd -c "${PROG} \"--no-daemon\" \"/mpd.conf\""
+exec su - mpd -c "${PROG} \"--no-daemon\" \"/mpd.conf\""
 # Debug
-#su - mpd -c "${PROG} \"--stdout\" \"--no-daemon\" \"/mpd.conf\""
+#exec su - mpd -c "${PROG} \"--stdout\" \"--no-daemon\" \"/mpd.conf\""

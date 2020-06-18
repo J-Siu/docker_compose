@@ -1,4 +1,4 @@
-Docker MPD Lite with UID/GID handling.
+Docker MPD Lite with UID/GID + audio GID handling.
 
 > MPD Lite is custom compile of MPD which trim down all functions except audio playing.
 
@@ -41,7 +41,7 @@ Library|Usage
 ```sh
 git clone https://github.com/J-Siu/docker_compose.git
 cd docker/mpd
-docker build -t jsiu/mpd
+docker build -t jsiu/mpd .
 ```
 
 ### Usage
@@ -184,8 +184,9 @@ docker-compose up
   - mpd version: 0.21.24
   - Fix base image: alpine:edge
   - start.sh
+    - Use exec so start.sh can exit
     - Add exit code 1
-    - Remove delgroup ${PUSR}
+    - Remove delgroup/deluser ${PUSR}
 
 ### License
 
