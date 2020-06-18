@@ -59,7 +59,13 @@ docker-compose up
 ### Change Log
 
 - 11025
-  - amule version 11025
+  - amule version 11025-r0
+- 11025-r0-p1
+  - Add patch postfix `-p1` to indicate container update
+  - amule version 11025-r0
+  - start.sh
+    - Use exec so start.sh can exit
+    - Remove delgroup/deluser ${PUSR}
 
 ### License
 
