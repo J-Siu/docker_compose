@@ -1,4 +1,4 @@
-Docker - Hugo site generator to be used in CI/CD.
+Docker - Hugo site generator used in CI/CD.
 
 ### Build
 
@@ -21,13 +21,13 @@ ${MY_GIT_URL}|${MY_GIT_URL}|yes|n/a|Hugo will work inside this dir
 ${MY_GIT_SUB}|${MY_GIT_SUB}|no|n/a|If defined(not empty), pull git sub-module
 ${MY_PUB_DIR}|${MY_PUB_DIR}|no|n/a|If defined(not empty), public will be copied here.
 
-If `${MY_GIT_DIR}` is definded:
+If `${MY_GIT_DIR}` is defined:
 
 - If `${MY_GIT_DIR}/.git` exist, do git pull, exist if failed.
 - If `${MY_GIT_DIR}` exist
 	- If empty, do git clone. exit if failed.
 	- If not empty, if git remote match, do git pull, exit if failed.
-  - If not emoty, not a repo, exit.
+  - If not empty, not a repo, exit.
 - If `${MY_GIT_DIR}` does not exist, do git clone, exist if failed.
 
 #### Run
