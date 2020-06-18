@@ -101,6 +101,10 @@ docker-compose up
 
 - 1.0
   - Initial commit.
+- 1.1
+  - Dockerfile remove apk update
+  - start.sh
+    - Use exec so start.sh can exit
 
 ### License
 

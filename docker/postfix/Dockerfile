@@ -1,12 +1,11 @@
 FROM alpine:edge
 
-LABEL version="1.0"
+LABEL version="1.1"
 LABEL maintainers="[John Sing Dao Siu](https://github.com/J-Siu)"
 LABEL name="postfix"
 LABEL usage="https://github.com/J-Siu/docker_compose/blob/master/docker/postfix/README.md"
 
-RUN apk update && \
-	apk --no-cache add ca-certificates ca-certificates-bundle tzdata \
+RUN apk --no-cache add ca-certificates ca-certificates-bundle tzdata \
 		cyrus-sasl \
 		cyrus-sasl-crammd5 \
 		cyrus-sasl-digestmd5 \

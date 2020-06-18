@@ -28,4 +28,4 @@ fi
 # update aliases
 newaliases
 
-postfix start-fg
+exec postfix start-fg
