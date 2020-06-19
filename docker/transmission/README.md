@@ -1,4 +1,4 @@
-Docker - transmission with UID/GID handling. Optional Transmission Web Control
+Docker - transmission with UID/GID handling.
 
 ### Build
 
@@ -27,20 +27,6 @@ docker run \
 -d \
 -e PUID=1001 \
 -e PGID=1002 \
--e P_TZ=America/New_York \
--v /home/jsiu/transmission:/transmission/.config/transmission-daemon \
---network=host \
-jsiu/transmission
-```
-
-To use [Transmission Web Control](https://github.com/ronggang/transmission-web-control) as web gui:
-
-```docker
-docker run \
--d \
--e PUID=1001 \
--e PGID=1002 \
--e PTWC=true \
 -e P_TZ=America/New_York \
 -v /home/jsiu/transmission:/transmission/.config/transmission-daemon \
 --network=host \
