@@ -10,7 +10,7 @@ if [ "${#P_TZ}" -gt "0" ]; then
 fi
 
 # Check /postfix exist and not empty
-if [ -d /postfix ] && [ "$(ls -A /postfix)" ] ; then
+if [ -d /postfix ] && [ "$(ls -A /postfix)" ]; then
 	cp -a /postfix /etc/
 	chown -R root:postfix /etc/postfix
 	chmod -R g+r /etc/postfix
