@@ -105,6 +105,9 @@ docker-compose up
   - Dockerfile remove apk update
   - start.sh
     - Use exec so start.sh can exit
+- 3.5.3-ro
+  - Adopt Postfix version
+  - Postfix version 3.5.3-r0
 
 ### License
 
