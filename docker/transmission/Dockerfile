@@ -7,7 +7,8 @@ LABEL name="transmission"
 LABEL usage="https://github.com/J-Siu/docker_compose/blob/master/docker/transmission/README.md"
 LABEL description="Docker - transmission with UID/GID handling"
 
-RUN apk --no-cache add tzdata transmission-daemon=3.00-r0 \
+RUN apk --no-cache add ca-certificates ca-certificates-bundle tzdata
+RUN apk --no-cache add transmission-daemon=3.00-r0 \
 && mkdir -p /transmission
 
 COPY docker-compose.yml env start.sh /
