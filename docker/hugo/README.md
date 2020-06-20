@@ -119,6 +119,10 @@ docker run --rm jsiu/hugo cat /README.md > README.md
   - Add README.md example.
   - Add `${MY_GIT_DIR}`, `${MY_GIT_PUB}`.
   - Fix cd into repository bug.
+- 0.72.0-r0
+  - Adopt Hugo version
+  - Hugo 0.72.0-r0
+
 
 The MIT License
 
