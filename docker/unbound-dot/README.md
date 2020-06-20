@@ -1,12 +1,20 @@
-# Unbound - Docker DNS over TLS (DoT) Forwarder
+Unbound - Docker DNS over TLS (DoT) Forwarder
 
 - Base: alpine:latest with unbound from apk
 - Small image < 14M.
 - Default config use Google and Cloudflare as DoT forwarder
 
-## Usage
+### Build
 
-### Standard Usage
+```sh
+git clone https://github.com/J-Siu/docker_compose.git
+cd docker/unbound-dot
+docker build --network=host -t jsiu/unbound-dot .
+```
+
+### Usage
+
+#### Standard Usage
 
 ```txt
 docker run -d \
@@ -15,7 +23,7 @@ docker run -d \
   jsiu/unbound:latest
 ```
 
-### Custom Config
+#### Custom Config
 
 Unbound custom config file:
 
@@ -37,7 +45,7 @@ docker run -d \
   jsiu/unbound:latest
 ```
 
-## /etc/unbound/unbound.conf
+### /etc/unbound/unbound.conf
 
 ```ini
 server:
@@ -80,3 +88,28 @@ forward-zone:
   forward-addr: 1.1.1.1@853
   forward-addr: 1.0.0.1@853
 ```
+
+### Repository
+
+- [docker_compose](https://github.com/J-Siu/docker_compose)
+
+### Contributors
+
+- [John Sing Dao Siu](https://github.com/J-Siu)
+
+### Change Log
+
+- 1.10.1-r0
+  - unbound 1.10.1-r0
+
+### License
+
+The MIT License
+
+Copyright (c) 2020
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

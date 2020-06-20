@@ -1,5 +1,13 @@
 FROM alpine:latest
-RUN apk --no-cache add unbound ca-certificates-cacert
+
+LABEL version="1.10.1-r0"
+LABEL maintainers="[John Sing Dao Siu](https://github.com/J-Siu)"
+LABEL name="unbound-dot"
+LABEL usage="https://github.com/J-Siu/docker_compose/blob/master/docker/unbound-dot/README.md"
+LABEL description="Docker - Unbound DNS over TLS (DoT) Forwarder"
+
+RUN apk --no-cache add ca-certificates ca-certificates-bundle tzdata
+RUN apk --no-cache add unbound=1.10.1-r0
 COPY unbound.conf /etc/unbound/
 EXPOSE 53
 CMD ["unbound","-d"]
