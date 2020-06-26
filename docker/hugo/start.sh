@@ -1,15 +1,18 @@
 #!/bin/sh
 
 [ -z ${MY_GIT_DIR} ] && MY_GIT_DIR=/hugo
-[ -z ${MY_HUG_PUB} ] && MY_HUG_PUB=public
+[ -z ${MY_THM_DIR} ] && MY_THM_DIR=/theme
+
+HUGO_ARG=$@
 
 echo MY_TZ:${MY_TZ}
 echo MY_GIT_DIR:${MY_GIT_DIR}
 echo MY_GIT_URL:${MY_GIT_URL}
 echo MY_GIT_SUB:${MY_GIT_SUB}
 echo MY_HUG_DIR:${MY_HUG_DIR}
-echo MY_HUG_PUB:${MY_HUG_PUB}
 echo MY_PUB_DIR:${MY_PUB_DIR}
+echo MY_THM_DIR:${MY_THM_DIR}
+echo MY_THM_URL:${MY_THM_URL}
 echo GIT_SSL_NO_VERIFY:${GIT_SSL_NO_VERIFY}
 
 # Run cmd with error check
@@ -24,46 +27,39 @@ RUN_CMD() {
 	return ${RTN}
 }
 
-# --- TZ
-if [ "${#MY_TZ}" -gt "0" ]; then
-	TZ="/usr/share/zoneinfo/${MY_TZ}"
-	if [ -f "${TZ}" ]; then
-		cp ${TZ} /etc/localtime
-		echo "${MY_TZ}" >/etc/timezone
+GIT_CLONE_PULL() {
+	MY_URL=$1
+	MY_DIR=$2
+	# --- GIT Clone/Pull
+	if [ ! -d ${MY_DIR} ]; then
+		# Create directory. This take care of path creation
+		# MY_DIR does not exist, do git clone
+		RUN_CMD "mkdir -p ${MY_DIR}"
+		echo ${MY_DIR} created ...
 	fi
-fi
-
-# --- MY_PUB_DIR check
-[ ! -z ${MY_PUB_DIR} ] && [ ! -d ${MY_PUB_DIR} ] && RUN_CMD "mkdir -p ${MY_PUB_DIR}"
-
-# --- GIT Clone/Pull
-if [ ! -d ${MY_GIT_DIR} ]; then
-	# MY_GIT_DIR does not exist, do git clone
-	RUN_CMD "git clone ${MY_GIT_URL} ${MY_GIT_DIR}"
-else
 	# MY_GIT_DIR exist ...
-	echo ${MY_GIT_DIR} exist ...
-	if [ "$(ls -A ${MY_GIT_DIR})" ]; then
+	echo ${MY_DIR} exist ...
+	if [ "$(ls -A ${MY_DIR})" ]; then
 		{
 			echo ... not empty
-			if [ -d ${MY_GIT_DIR}/.git ]; then
+			if [ -d ${MY_DIR}/.git ]; then
 				echo ... is repo
-				RUN_CMD "cd ${MY_GIT_DIR}"
-				# Check if remote same as MY_GIT_URL
+				RUN_CMD "cd ${MY_DIR}"
+				# Check if remote same as MY_URL
 				REMOTE=$(git remote -v | grep \(fetch\))
 				case "${REMOTE}" in
-				*"${MY_GIT_URL}"*)
+				*"${MY_URL}"*)
 					echo ... pull
 					RUN_CMD "git pull"
 					;;
 				*)
-					echo MY_GIT_URL:${MY_GIT_URL} not same as repo remote: ${REMOTE}
+					echo MY_URL:${MY_URL} not same as repo remote: ${REMOTE}
 					exit 1
 					;;
 				esac
 			else
 				echo ... not repo, don\'t touch, exit
-				echo ${MY_GIT_DIR} exist but not empty and not a git repo.
+				echo ${MY_DIR} exist but not empty and not a git repo.
 				exit 1
 			fi
 		}
@@ -74,7 +70,22 @@ else
 			RUN_CMD "git clone ${MY_GIT_URL} ${MY_GIT_DIR}"
 		}
 	fi
+}
+
+# --- TZ
+if [ "${#MY_TZ}" -gt "0" ]; then
+	TZ="/usr/share/zoneinfo/${MY_TZ}"
+	if [ -f "${TZ}" ]; then
+		cp ${TZ} /etc/localtime
+		echo "${MY_TZ}" >/etc/timezone
+	fi
 fi
+
+# --- GIT Clone/Pull Site
+GIT_CLONE_PULL ${MY_GIT_URL} ${MY_GIT_DIR}
+
+# --- GIT Clone/Pull Theme
+[ ! -z ${MY_THM_URL} ] && GIT_CLONE_PULL ${MY_THM_DIR} ${MY_THM_URL}
 
 # --- CD into repo
 RUN_CMD "cd ${MY_GIT_DIR}"
@@ -84,13 +95,19 @@ if [ ! -z ${MY_GIT_SUB} ]; then
 	RUN_CMD "git submodule update --init --recursive"
 fi
 
+# --- Prepare publish directory
+if [ ! -z ${MY_PUB_DIR} ]; then
+	[ ! -d ${MY_PUB_DIR} ] && RUN_CMD "mkdir -p ${MY_PUB_DIR}"
+	HUGO_ARG="${HUGO_ARG} --destination ${MY_PUB_DIR}"
+fi
+
 # --- CD into Hugo dir
 RUN_CMD "cd ${MY_GIT_DIR}/${MY_HUG_DIR}"
 
-# --- Hugo
-RUN_CMD "hugo $@"
+# ---
+echo HUGO_ARG:$@
 
-# --- Copy
-[ ! -z ${MY_PUB_DIR} ] && RUN_CMD "cp -r ${MY_HUG_PUB}/* ${MY_PUB_DIR}/"
+# --- Hugo
+RUN_CMD "hugo ${HUGO_ARG}"
 
 exit 0
