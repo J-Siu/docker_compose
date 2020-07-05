@@ -2,8 +2,8 @@ FROM alpine:latest
 
 LABEL version="1.10.1-r0"
 LABEL maintainers="[John Sing Dao Siu](https://github.com/J-Siu)"
-LABEL name="unbound-dot"
-LABEL usage="https://github.com/J-Siu/docker_compose/blob/master/docker/unbound-dot/README.md"
+LABEL name="unbound"
+LABEL usage="https://github.com/J-Siu/docker_compose/blob/master/docker/unbound/README.md"
 LABEL description="Docker - Unbound DNS over TLS (DoT) Forwarder"
 
 RUN apk --no-cache add ca-certificates ca-certificates-bundle tzdata

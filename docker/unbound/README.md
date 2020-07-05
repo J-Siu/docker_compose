@@ -8,8 +8,8 @@ Unbound - Docker DNS over TLS (DoT) Forwarder
 
 ```sh
 git clone https://github.com/J-Siu/docker_compose.git
-cd docker/unbound-dot
-docker build --network=host -t jsiu/unbound-dot .
+cd docker/unbound
+docker build --network=host -t jsiu/unbound .
 ```
 
 ### Usage
