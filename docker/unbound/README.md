@@ -101,6 +101,7 @@ forward-zone:
 
 - 1.10.1-r0
   - unbound 1.10.1-r0
+<!--CHANGE-LOG-END-->
 
 ### License
 

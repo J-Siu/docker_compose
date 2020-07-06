@@ -1,7 +1,7 @@
 # docker_mpd
 FROM alpine:edge
 
-LABEL version="11025-r0-p1"
+LABEL version="11025-r2"
 LABEL maintainers="[John Sing Dao Siu](https://github.com/J-Siu)"
 LABEL name="amule"
 LABEL usage="https://github.com/J-Siu/docker_compose/blob/master/docker/amule/README.md"

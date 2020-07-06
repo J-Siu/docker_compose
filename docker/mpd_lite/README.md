@@ -187,6 +187,7 @@ docker-compose up
     - Use exec so start.sh can exit
     - Add exit code 1
     - Remove delgroup/deluser ${PUSR}
+<!--CHANGE-LOG-END-->
 
 ### License
 

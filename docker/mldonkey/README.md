@@ -58,7 +58,8 @@ docker-compose up
 ### Change Log
 
 - 11025
-  - amule version 11025
+  - mldonkey version 11025
+<!--CHANGE-LOG-END-->
 
 ### License
 

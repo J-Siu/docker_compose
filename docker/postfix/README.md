@@ -144,6 +144,7 @@ docker-compose up
 - 3.5.3-r0
   - Adopt Postfix version
   - Postfix version 3.5.3-r0
+<!--CHANGE-LOG-END-->
 
 ### License
 

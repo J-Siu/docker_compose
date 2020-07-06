@@ -55,6 +55,7 @@ docker-compose up
   - hostapd version 2.9
 - 2.9-r2
   - hostapd version 2.9-r2
+<!--CHANGE-LOG-END-->
 
 ### License
 

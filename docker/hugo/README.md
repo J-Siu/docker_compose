@@ -157,6 +157,7 @@ docker run --rm jsiu/hugo cat /README.md > README.md
   - Added
     - ${MY_THM_DIR}
     - ${MY_THM_DIR}
+<!--CHANGE-LOG-END-->
 
 The MIT License
 
