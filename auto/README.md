@@ -1,0 +1,14 @@
+- TODO
+  - [ ] Config file
+    - [ ] pull frequency manual/run/day/week
+    - [ ] Use state file
+  - [ ] auto.docker.sh
+    - [ ] Add skeleton generation (Scaffolding)
+  - [ ] Logging
+  - [ ] Auto git commit
+  - [ ] Auto update master README.md table
+  - [ ] README.md
+    - [ ] Instruction
+    - [ ] Doc for auto.conf
+    - [ ] Doc for distro
+    - [ ] Doc for auto.common.sh source usage/flow

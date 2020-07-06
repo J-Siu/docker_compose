@@ -1,1 +1,3 @@
-build/tmp
+auto/db
+auto/stg
+auto/tmp
