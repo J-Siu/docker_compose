@@ -134,6 +134,8 @@ docker-compose up
     - Use exec so start.sh can exit
     - Add exit code 1
     - Remove delgroup/deluser ${PUSR}
+- 0.21.25-r0
+  - Auto update to 0.21.25-r0
 <!--CHANGE-LOG-END-->
 
 ### License
