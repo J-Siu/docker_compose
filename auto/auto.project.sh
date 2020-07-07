@@ -8,6 +8,7 @@ source auto.common.sh
 # LABEL usage="{usage}"
 # {distro} derived from {from}
 # {tag} derived from {from}
+# {project} project/dir name
 declare -A dockerfile
 
 # List of distro::branch
@@ -22,22 +23,26 @@ distro_branch_update() {
 	done
 }
 
-# ${1} dockerfile path
+# ${1} project path
 dockerfile_get() {
-	local _dockerfile_path=${1}
+	local _project_path=${1}
+	local _project=$(basename ${__project_path})
+	local _dockerfile_path=${_project_path}/Dockerfile
 	for _i in version maintainers name usage; do
 		local _val=$(grep "^LABEL\ ${_i}" ${_dockerfile_path} | cut -d= -f2-)
 		_val=${_val##\"} # strip first "
 		_val=${_val%%\"} # strip last "
 		dockerfile[${_i}]=${_val}
-		#echo ${_i}:"${dockerfile[${_i}]}"
+		echo ${_i}:"${dockerfile[${_i}]}"
 	done
 	dockerfile["from"]=$(grep "^FROM\ " ${_dockerfile_path} | cut -d' ' -f2-)
-	#echo from:"${dockerfile['from']}"
+	echo from:"${dockerfile['from']}"
 	dockerfile['distro']=${dockerfile['from']%:*}
 	echo distro:"${dockerfile['distro']}"
 	dockerfile['tag']=${dockerfile['from']#*:}
 	echo tag:"${dockerfile['tag']}"
+	dockerfile['project']=${_project}
+	echo project:"${dockerfile['project']}"
 }
 
 dockerfile_skip() {
@@ -49,17 +54,14 @@ dockerfile_skip() {
 
 	#echo ${_from}, ${_tag}, ${_pkg}
 
-	[[ ${_from} == *" as "* ]] && return 0 # 0=true, skip, not simple
-	echo :No AS
-	[[ ${distro_tags} != *"${_distro}:${_tag}"* ]] && return 0 # 0=true, skip, not edge/latest
-	echo :is distro:tag
+	[[ ${_from} == *" as "* ]] && echo "Has AS" && return 0                                  # 0=true, skip, not simple
+	[[ ${distro_tags} != *"${_distro}:${_tag}"* ]] && echo "distro:tag no match" && return 0 # 0=true, skip, not edge/latest
+
 	local _db_pkg_ver=$(auto_db_pkg_ver ${_distro} ${_tag} ${_pkg})
-	[[ -z ${_db_pkg_ver} ]] && return 0 # 0=true, skip, pkg not found
-	echo :pkg found
-	[[ "${_ver}" == "${_db_pkg_ver}" ]] && return 0 # 0=true, skip, same version
-	echo :ver != db ver
-	[[ "${_ver}" > "${_db_pkg_ver}" ]] && return 0 # 0=true, skip, doesn't make sense, oh well ...
-	echo :ver \< db ver
+	[[ -z ${_db_pkg_ver} ]] && echo "PKG not found" && return 0                # 0=true, skip, pkg not found
+	[[ "${_ver}" == "${_db_pkg_ver}" ]] && echo "PKG no update" && return 0    # 0=true, skip, same version
+	[[ "${_ver}" > "${_db_pkg_ver}" ]] && echo "PKG newer than db" && return 0 # 0=true, skip, doesn't make sense, oh well ...
+
 	return 1 # 1=false, don't skip
 }
 
@@ -81,11 +83,20 @@ dockerfile_build() {
 
 # ${1} staging dir
 dockerfile_update() {
-	local _file=${1}/Dockerfile
+	local _dir=${1}
+	local _p
+	local _file=${_dir}/Dockerfile
 	local _old_ver=${dockerfile["version"]}
 	local _new_ver=$(auto_db_pkg_ver ${dockerfile["distro"]} ${dockerfile["tag"]} ${dockerfile["name"]})
 	echo ${_old_ver} '->' ${_new_ver}
 	sed -i "s/${_old_ver}/${_new_ver}/g" ${_file}
+
+	# maintainers
+	sed -i "s/^LABEL maintainers=*/LABEL maintainers=\"${auto_git_maintainers}\"/g" ${_file}
+
+	# usage
+	local _usage="${auto_git_maintainers}/${dockerfile["project"]}/blob/master/README.md"
+	sed -i "s/^LABEL usage=*/LABEL usage=\"${_usage}\"/g" ${_file}
 }
 
 # ${1} staging dir
@@ -122,41 +133,43 @@ project_update() {
 		dockerfile[${_j}]=''
 	done
 
-	dockerfile_get ${_docker}/Dockerfile
+	if [ -f ${_project}/Dockerfile ]; then
+		dockerfile_get ${_project}
 
-	# dockerfile_skip use global var dockerfile
-	if dockerfile_skip; then
-		echo skipped
-	else
-		echo process ${_docker}
-		# Staging dir
-		local _dir_stg=${auto_stg_root}/${dockerfile["name"]}
-		# Delete if staging dir exist
-		[ -d ${_dir_stg} ] && rm -rf ${_dir_stg}
-		# Copy project to staging
-		cp -r ${_docker} ${auto_stg_root}/
-		# Update Dockerfile
-		dockerfile_update ${_dir_stg}
-		# Build
-		dockerfile_build ${_dir_stg} ${dockerfile["name"]}
-		local _rtn=$?
-		# If build successful
-		if [ ${_rtn} -eq 0 ]; then
-			readme_update ${_dir_stg}
-			license_update ${_dir_stg}
-			# Copy from staging to project
-			for _j in Dockerfile README.md LICENSE; do
-				CMD="cp ${_dir_stg}/${_j} ${_docker}/"
-				echo $CMD
-				$CMD
-				# Add to file change list
-				file_changed+=" ${_docker}/${_j}"
-			done
+		# dockerfile_skip use global var dockerfile
+		if dockerfile_skip; then
+			echo skipping ${_project}
+		else
+			echo processing ${_project}
+			# Staging dir
+			local _dir_stg=${auto_stg_root}/${dockerfile["name"]}
+			# Delete if staging dir exist
+			[ -d ${_dir_stg} ] && rm -rf ${_dir_stg}
+			# Copy project to staging
+			cp -r ${_project} ${auto_stg_root}/
+			# Update Dockerfile
+			dockerfile_update ${_dir_stg}
+			# Build
+			dockerfile_build ${_dir_stg} ${dockerfile["name"]}
+			local _rtn=$?
+			# If build successful
+			if [ ${_rtn} -eq 0 ]; then
+				readme_update ${_dir_stg}
+				license_update ${_dir_stg}
+				# Copy from staging to project
+				for _j in Dockerfile README.md LICENSE; do
+					CMD="cp ${_dir_stg}/${_j} ${_project}/"
+					echo $CMD
+					$CMD
+					# Add to file change list
+					file_changed+=" ${_project}/${_j}"
+				done
 
-			# Add git msg
-			local _old_ver=${dockerfile["version"]}
-			local _new_ver=$(auto_db_pkg_ver ${dockerfile["distro"]} ${dockerfile["tag"]} ${dockerfile["name"]})
-			git_msg+="\n- ${dockerfile["name"]} ${_old_ver} -> ${_new_ver}"
+				# Add git msg
+				local _old_ver=${dockerfile["version"]}
+				local _new_ver=$(auto_db_pkg_ver ${dockerfile["distro"]} ${dockerfile["tag"]} ${dockerfile["name"]})
+				git_msg+="\n- ${dockerfile["name"]} ${_old_ver} -> ${_new_ver}"
+			fi
 		fi
 	fi
 }
@@ -172,7 +185,7 @@ distro_branch_update
 
 echo ${distro_branch}
 
-for _docker in ${auto_docker_root}/*; do
+for _docker in ${auto_project_prefix}*; do
 	echo ---
 	echo ${_docker}
 	project_update ${_docker}
