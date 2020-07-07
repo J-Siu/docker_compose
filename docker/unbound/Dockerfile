@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM alpine:edge
 
 LABEL version="1.10.1-r0"
 LABEL maintainers="[John Sing Dao Siu](https://github.com/J-Siu)"
