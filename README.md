@@ -1,7 +1,5 @@
 J-Siu docker/compose repository
 
-- docker
-  - Dockerfile created by J-Siu
 - compose
   - docker-compose.yml base on others docker images
 
